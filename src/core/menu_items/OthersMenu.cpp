@@ -32,6 +32,7 @@ void OthersMenu::optionsMenu() {
     #ifdef HAS_RGB_LED
         {"LED Control",  [=]()  { ledColorConfig(); }},
         {"LED Brightness", [=]() { ledBrightnessConfig(); }},
+        {"LED Blink", [=]() { ledBlink(); }},
     #endif
     #ifndef LITE_VERSION
         {"Openhaystack", [=]() { openhaystack_setup(); }},

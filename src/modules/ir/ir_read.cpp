@@ -15,6 +15,9 @@
 #include "core/display.h"
 #include "core/sd_functions.h"
 #include "core/settings.h"
+#ifdef HAS_RGB_LED
+#include "modules/others/led_control.h"
+#endif
 
 /* Dont touch this */
 //#define MAX_RAWBUF_SIZE 300
@@ -134,6 +137,10 @@ void IrRead::read_signal() {
 
     display_banner();
 
+    #ifdef HAS_RGB_LED
+    ledBlink();
+    #endif   
+    
     // Dump of signal details
     padprint("RAW Data Captured:");
     String raw_signal = parse_raw_signal();

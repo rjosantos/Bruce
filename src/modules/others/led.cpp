@@ -96,4 +96,20 @@ void ledBrightnessConfig()
     loopOptions(options);
 
 }
+
+void ledBlink()
+{
+    #ifdef RGB_LED_CLK
+    FastLED.addLeds<LED_TYPE, RGB_LED, RGB_LED_CLK, LED_ORDER>(leds, LED_COUNT);
+    #else
+    FastLED.addLeds<LED_TYPE, RGB_LED, LED_ORDER>(leds, LED_COUNT); // Initialize the LED Object. Only 1 LED.
+    #endif
+    setBrightness(brightness); // Set LED Brightness
+
+    setColor(CRGB::White); 
+    delay(100); 
+    setColor(CRGB::Black); 
+    delay(100); 
+
+}
 #endif
