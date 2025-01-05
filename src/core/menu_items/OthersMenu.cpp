@@ -10,6 +10,7 @@
 #include "modules/others/timer.h"
 #include "core/utils.h"
 
+#include "modules/others/clicker.h"
 #include "modules/others/bad_usb.h"
 #ifdef HAS_RGB_LED
 #include "modules/others/led_control.h"
@@ -36,6 +37,7 @@ void OthersMenu::optionsMenu() {
     #endif
     #ifndef LITE_VERSION
         {"Openhaystack", [=]() { openhaystack_setup(); }},
+        {"Clicker",       [=]() { clicker_setup(); }},
     #endif
     #if !defined(ARDUINO_M5STACK_ARDUINO_M5STACK_CORE) && !defined(ARDUINO_M5STACK_ARDUINO_M5STACK_CORE2)
         {"Interpreter", [=]()  { run_bjs_script(); }},
