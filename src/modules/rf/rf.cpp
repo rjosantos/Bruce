@@ -85,6 +85,9 @@ void rf_spectrum() { //@IncursioHack - https://github.com/IncursioHack ----thank
     if(!initRfModule("rx", bruceConfig.rfFreq)) return;
     initRMT();
 
+    // Clear the display area
+    tft.fillRect(0, 0, tftWidth, tftHeight, bruceConfig.bgColor);
+    int lineX = 0;
     RingbufHandle_t rb = nullptr;
     rmt_get_ringbuf_handle(RMT_RX_CHANNEL, &rb);
     rmt_rx_start(RMT_RX_CHANNEL, true);
@@ -93,16 +96,18 @@ void rf_spectrum() { //@IncursioHack - https://github.com/IncursioHack ----thank
         rmt_item32_t* item = (rmt_item32_t*)xRingbufferReceive(rb, &rx_size, 500);
         if (item != nullptr) {
             if (rx_size != 0) {
-                // Clear the display area
-                tft.fillRect(0, 20, tftWidth, tftHeight, bruceConfig.bgColor);
                 // Draw waveform based on signal strength
                 for (size_t i = 0; i < rx_size; i++) {
-                    int lineHeight = map(item[i].duration0 + item[i].duration1, 0, SIGNAL_STRENGTH_THRESHOLD, 0, tftHeight/2);
-                    int lineX = map(i, 0, rx_size - 1, 0, tftWidth - 1); // Map i to within the display width
+                    int lineHeight = ::map(item[i].duration0 + item[i].duration1, 0, SIGNAL_STRENGTH_THRESHOLD, 0, tftHeight/3);
                     // Ensure drawing coordinates stay within the box bounds
-                    int startY = constrain(20 + tftHeight / 2 - lineHeight / 2, 20, 20 + tftHeight);
-                    int endY = constrain(20 + tftHeight / 2 + lineHeight / 2, 20, 20 + tftHeight);
+                    int startY = constrain(tftHeight / 2 - lineHeight / 2, 0, tftHeight);
+                    int endY = constrain(tftHeight / 2 + lineHeight / 2, 0, tftHeight);
                     tft.drawLine(lineX, startY, lineX, endY, bruceConfig.priColor);
+
+                    for (int j = 1; j < 10; j++) {
+                        tft.drawLine((lineX + j) % tftWidth, 0, (lineX + j) % tftWidth, tftHeight, bruceConfig.bgColor);
+                    }
+                    lineX = (lineX + 1) % tftWidth;
                 }
             }
             vRingbufferReturnItem(rb, (void*)item);
