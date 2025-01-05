@@ -97,7 +97,7 @@ void ledBrightnessConfig()
 
 }
 
-void ledBlink()
+void ledBlink(int c)
 {
     #ifdef RGB_LED_CLK
     FastLED.addLeds<LED_TYPE, RGB_LED, RGB_LED_CLK, LED_ORDER>(leds, LED_COUNT);
@@ -106,10 +106,27 @@ void ledBlink()
     #endif
     setBrightness(brightness); // Set LED Brightness
 
-    setColor(CRGB::White); 
+    CRGB blinkColor = CRGB::White;
+
+    if (c == 1) {
+        blinkColor = CRGB::Red;
+    } else if (c == 2) {
+        blinkColor = CRGB::Green;
+    } else if (c == 3) {
+        blinkColor = CRGB::Blue;
+    }
+
+    setColor(blinkColor); 
     delay(100); 
     setColor(CRGB::Black); 
     delay(100); 
 
 }
+
+void ledBlink()
+{
+    ledBlink(0);
+}
+
+
 #endif

@@ -58,7 +58,7 @@ static const uint8_t SCL = GROVE_SCL;
 #define SDCARD_SCK  SPI_SCK_PIN
 
 // NRF24 - Over QWIIC Port #2
-#define USE_NRF24_VIA_SPI
+//#define USE_NRF24_VIA_SPI
 #define NRF24_CE_PIN    43
 #define NRF24_SS_PIN    44
 #define NRF24_MOSI_PIN  SDCARD_MOSI

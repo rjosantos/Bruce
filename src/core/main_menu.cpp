@@ -10,9 +10,13 @@ MainMenu::MainMenu() {
         &rfMenu,
         &rfidMenu,
         &irMenu,
+    #if defined(USE_FMRADIO)
         &fmMenu,
+    #endif
         &fileMenu,
+    #if defined(USE_GPS)
         &gpsMenu,
+    #endif
     #if defined(USE_NRF24_VIA_SPI)
         &nrf24Menu,
     #endif
@@ -25,6 +29,7 @@ MainMenu::MainMenu() {
         &clockMenu,
         &connectMenu,
         &configMenu,
+        &powerOffMenu
     };
 
     _totalItems = _menuItems.size();

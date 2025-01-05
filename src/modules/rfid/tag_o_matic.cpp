@@ -13,6 +13,10 @@
 #include "RFID2.h"
 #include "PN532.h"
 
+#ifdef HAS_RGB_LED
+#include "modules/others/led_control.h"
+#endif
+
 #define NDEF_DATA_SIZE 100
 #define SCAN_DUMP_SIZE 5
 
@@ -211,7 +215,17 @@ void TagOMatic::dump_card_details() {
 	padprintln("UID: " + _rfid->printableUID.uid);
 	padprintln("ATQA: " + _rfid->printableUID.atqa);
 	padprintln("SAK: " + _rfid->printableUID.sak);
-    if (!_rfid->pageReadSuccess) padprintln("[!] Failed to read data blocks");
+    if (_rfid->pageReadSuccess) {
+        #ifdef HAS_RGB_LED
+        ledBlink();
+        #endif   
+    } 
+    else {
+        #ifdef HAS_RGB_LED
+        ledBlink(1);
+        #endif   
+        padprintln("[!] Failed to read data blocks");
+    }
 }
 
 void TagOMatic::dump_ndef_details() {
@@ -245,7 +259,8 @@ void TagOMatic::read_card() {
     dump_card_details();
 
     _read_uid = true;
-    delay(500);
+
+    delay(2000);
 }
 
 void TagOMatic::scan_cards() {

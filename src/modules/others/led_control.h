@@ -10,6 +10,7 @@ void setColor(CRGB c);
 void setBrightness(int b);
 void ledColorConfig();
 void ledBrightnessConfig();
+void ledBlink(int c);
 void ledBlink();
 
 #endif
