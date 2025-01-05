@@ -98,13 +98,12 @@ void rf_spectrum() { //@IncursioHack - https://github.com/IncursioHack ----thank
             if (rx_size != 0) {
                 // Draw waveform based on signal strength
                 for (size_t i = 0; i < rx_size; i++) {
-                    int lineHeight = ::map(item[i].duration0 + item[i].duration1, 0, SIGNAL_STRENGTH_THRESHOLD, 0, tftHeight/3);
+                    int lineHeight = map(item[i].duration0 + item[i].duration1, 0, SIGNAL_STRENGTH_THRESHOLD, 0, tftHeight/3);
                     // Ensure drawing coordinates stay within the box bounds
                     int startY = constrain(tftHeight / 2 - lineHeight / 2, 0, tftHeight);
                     int endY = constrain(tftHeight / 2 + lineHeight / 2, 0, tftHeight);
                     tft.drawLine(lineX, startY, lineX, endY, bruceConfig.priColor);
-
-                    for (int j = 1; j < 40; j++) {
+                    for (int j = 1; j <= (int)(tftWidth/10); j++) {
                         tft.drawLine((lineX + j) % tftWidth, 0, (lineX + j) % tftWidth, tftHeight, bruceConfig.bgColor);
                     }
                     lineX = (lineX + 1) % tftWidth;
