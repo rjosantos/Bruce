@@ -104,7 +104,7 @@ void rf_spectrum() { //@IncursioHack - https://github.com/IncursioHack ----thank
                     int endY = constrain(tftHeight / 2 + lineHeight / 2, 0, tftHeight);
                     tft.drawLine(lineX, startY, lineX, endY, bruceConfig.priColor);
 
-                    for (int j = 1; j < 40; j++) {
+                    for (int j = 1; j < int(tftWidth/10); j++) {
                         tft.drawLine((lineX + j) % tftWidth, 0, (lineX + j) % tftWidth, tftHeight, bruceConfig.bgColor);
                     }
                     lineX = (lineX + 1) % tftWidth;
