@@ -1,6 +1,7 @@
 #include "PowerOffMenu.h"
 #include "core/display.h"
 #include "core/settings.h"
+#include <lilygo-t-embed-cc1101.h>
 
 void PowerOffMenu::optionsMenu() {
 
