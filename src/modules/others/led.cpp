@@ -97,7 +97,7 @@ void ledBrightnessConfig()
 
 }
 
-void ledBlink(int c)
+void ledBlink(int c, int d)
 {
     #ifdef RGB_LED_CLK
     FastLED.addLeds<LED_TYPE, RGB_LED, RGB_LED_CLK, LED_ORDER>(leds, LED_COUNT);
@@ -117,10 +117,14 @@ void ledBlink(int c)
     }
 
     setColor(blinkColor); 
-    delay(100); 
+    delay(d); 
     setColor(CRGB::Black); 
-    delay(100); 
 
+}
+
+void ledBlink(int c)
+{
+    ledBlink(c, 100);
 }
 
 void ledBlink()

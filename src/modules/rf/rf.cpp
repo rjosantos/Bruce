@@ -14,6 +14,10 @@
 #include <string>
 #include <sstream>
 
+#ifdef HAS_RGB_LED
+#include "modules/others/led_control.h"
+#endif
+
 // Cria um objeto PCA9554 com o endereço I2C do PCA9554PW
 // PCA9554 extIo1(pca9554pw_address);
 
@@ -25,7 +29,7 @@
 #define RMT_1US_TICKS (80000000 / RMT_CLK_DIV / 1000000)
 #define RMT_1MS_TICKS (RMT_1US_TICKS * 1000)
 
-#define SIGNAL_STRENGTH_THRESHOLD 1500 // Adjust this threshold as needed
+#define SIGNAL_STRENGTH_THRESHOLD 2000 // Adjust this threshold as needed
 
 #define LINE_WIDTH 2 // Adjust line width as needed
 
@@ -92,6 +96,10 @@ void rf_spectrum() { //@IncursioHack - https://github.com/IncursioHack ----thank
     rmt_get_ringbuf_handle(RMT_RX_CHANNEL, &rb);
     rmt_rx_start(RMT_RX_CHANNEL, true);
     while (rb) {
+        //#ifdef HAS_RGB_LED
+        //ledBlink(LED_GREEN, LED_BLINK_VERY_FAST);
+        //#endif           
+
         size_t rx_size = 0;
         rmt_item32_t* item = (rmt_item32_t*)xRingbufferReceive(rb, &rx_size, 500);
         if (item != nullptr) {
